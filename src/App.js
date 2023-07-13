@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./assets/App.scss";
-import Character from "./pages/character/character";
-import Episode from "./pages/episode/episode";
-import Home from "./pages/home/home";
-import Layout from "./pages/layout/layout";
+const Layout = React.lazy(() => import("./pages/layout/layout"));
+const Home = React.lazy(() => import("./pages/home/home"));
+const Episode = React.lazy(() => import("./pages/episode/episode"));
+const Character = React.lazy(() => import("./pages/character/character"));
 function App() {
   return (
     <div className="app">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="character" element={<Character />} />
-          <Route path="episode" element={<Episode />} />
+          <Route path="character/:id" element={<Character />} />
+          <Route path="episode/:episode" element={<Episode />} />
         </Route>
       </Routes>
     </div>
