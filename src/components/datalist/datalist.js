@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Col, Row, Skeleton } from "antd";
 import { Card } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import "./style.scss";
+import "./style.scss"; 
 function DataList({ data }) {
   const [loading, setLoading] = useState(true);
-  let navigate = useNavigate();
-  console.log(data);
+  
   return (
     <Row gutter={[120, 34]}>
       {data.map((el) => {
@@ -24,7 +23,7 @@ function DataList({ data }) {
                   Name: <Link to={`/character/${el.id}`}> {el.name}</Link>{" "}
                 </p>
                 <p>Species: {el.species}</p>
-                <p>Gender:{el.gender}</p>
+                <p>Status: {el.status}</p>
               </div>
               <div className="episodes">
                 <p> Episodes: </p>
