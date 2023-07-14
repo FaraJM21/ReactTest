@@ -1,12 +1,16 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getData, setError } from "../../redux/dataReducer";
+import { BaseUrl } from "../../server/server";
 import "./style.scss";
 const { Option } = Select;
 
 const SearchForm = () => {
   const [form] = Form.useForm();
-  const [submittable, setSubmittable] = React.useState(false);
-
+  const [submittable, setSubmittable] = useState(false);
+  const dispatch = useDispatch();
   // Watch all values
   const values = Form.useWatch([], form);
 
@@ -22,8 +26,16 @@ const SearchForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values]);
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    const { name, status } = values;
+    try {
+      await axios
+        .get(BaseUrl + `/character/?name=${name}&status=${status}`)
+        .then((res) => dispatch(getData(res.data.results)));
+      dispatch(setError(""));
+    } catch (err) {
+      dispatch(setError(err.response.data.error));
+    }
   };
 
   return (
@@ -44,7 +56,7 @@ const SearchForm = () => {
         <Input placeholder="Search with a name" />
       </Form.Item>
       <Form.Item
-        name="gender"
+        name="status"
         rules={[
           {
             required: true,

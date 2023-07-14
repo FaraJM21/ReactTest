@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { DataList, Spinner } from "../../components";
 import "./home.scss";
 function Home() {
-  const data = useSelector((state) => state.data.data);
+  const data = useSelector((state) => state.data);
 
   return (
     <Container maxWidth="lg">
