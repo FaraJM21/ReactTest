@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import { Col, Row, Skeleton } from "antd";
 import { Card } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import "./style.scss"; 
+import { Link } from "react-router-dom";
+import "./style.scss";
 function DataList({ data }) {
-  const [loading, setLoading] = useState(true);
-  
   return (
-    <Row gutter={[120, 34]}>
+    <Row gutter={[200, 34]}>
       {data.map((el) => {
         return (
-          <Col span={6} key={el.id}>
+          <Col
+            span={6}
+            key={el.id}
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+
+            }}
+          >
             <Card hoverable className="card">
               <img
                 src={el.image}
                 alt="404"
                 style={{ width: "100%" }}
-                onLoad={() => setLoading(true)}
+                // onLoad={() => setLoading(true)}
               />
               <div className="card-inner">
                 <p>
@@ -29,9 +36,11 @@ function DataList({ data }) {
                 <p> Episodes: </p>
                 {el.episode.slice(0, 5).map((el, i) => {
                   return (
-                    <div className="episode" key={i}>
-                      <Link to={`/episode/${el.slice(40, 42)}`}>{el}</Link>
-                    </div>
+                    //
+                    <Link to={`/episode/${el.slice(40, 42)}`} key={i}>
+                      {el}
+                    </Link>
+                    // <p onClick={() => click(el)}>{el}</p>
                   );
                 })}
               </div>
