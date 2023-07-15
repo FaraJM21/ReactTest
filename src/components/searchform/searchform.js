@@ -1,8 +1,8 @@
 import { Button, Form, Input, Select } from "antd";
 import axios from "axios";
-import { async } from "q";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
 import { getData, setError } from "../../redux/dataReducer";
 import { BaseUrl } from "../../server/server";
 import "./style.scss";
@@ -11,9 +11,12 @@ const { Option } = Select;
 const SearchForm = () => {
   const [form] = Form.useForm();
   const [submittable, setSubmittable] = useState(false);
+  const [showReset, setShowReset] = useState(false);
   const dispatch = useDispatch();
   // Watch all values
   const values = Form.useWatch([], form);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     form.validateFields({ validateOnly: true }).then(
@@ -29,6 +32,7 @@ const SearchForm = () => {
 
   const onFinish = async (values) => {
     const { name, status } = values;
+
     try {
       await axios
         .get(BaseUrl + `/character/?name=${name}&status=${status}`)
@@ -37,9 +41,12 @@ const SearchForm = () => {
     } catch (err) {
       dispatch(setError(err.response.data.error));
     }
+    setShowReset(true);
+    location.pathname !== "/" && navigate("/");
   };
 
   const resetAll = async () => {
+    setShowReset(false);
     try {
       await axios
         .get(BaseUrl + "/character")
@@ -49,6 +56,7 @@ const SearchForm = () => {
       dispatch(setError(err.response.data.error));
     }
     form.resetFields();
+    location.pathname !== "/" && navigate("/");
   };
 
   return (
@@ -88,7 +96,11 @@ const SearchForm = () => {
           <Button type="primary" htmlType="submit" disabled={!submittable}>
             Search
           </Button>
-          <Button htmlType="button" onClick={resetAll} >
+          <Button
+            htmlType="button"
+            onClick={resetAll}
+            style={{ display: showReset ? "block" : "none" }}
+          >
             Reset
           </Button>
         </div>
