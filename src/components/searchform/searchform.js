@@ -1,5 +1,6 @@
 import { Button, Form, Input, Select } from "antd";
 import axios from "axios";
+import { async } from "q";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getData, setError } from "../../redux/dataReducer";
@@ -38,6 +39,18 @@ const SearchForm = () => {
     }
   };
 
+  const resetAll = async () => {
+    try {
+      await axios
+        .get(BaseUrl + "/character")
+        .then((res) => dispatch(getData(res.data.results)));
+      dispatch(setError(""));
+    } catch (err) {
+      dispatch(setError(err.response.data.error));
+    }
+    form.resetFields();
+  };
+
   return (
     <Form
       form={form}
@@ -71,9 +84,14 @@ const SearchForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" disabled={!submittable}>
-          Search
-        </Button>
+        <div className="btns" style={{ display: "flex", gap: "20px" }}>
+          <Button type="primary" htmlType="submit" disabled={!submittable}>
+            Search
+          </Button>
+          <Button htmlType="button" onClick={resetAll} >
+            Reset
+          </Button>
+        </div>
       </Form.Item>
     </Form>
   );
