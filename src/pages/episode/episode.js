@@ -18,6 +18,7 @@ function Episode() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getEpisodes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
