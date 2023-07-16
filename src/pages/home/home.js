@@ -11,13 +11,18 @@ function Home() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.data);
 
+  const fetchData = async () => {
+    try {
+      await axios
+        .get(BaseUrl + `/character/${data.numbers}`)
+        .then((res) => dispatch(getData(res.data)));
+    } catch (err) {
+      dispatch(setError(err.message));
+    }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios
-      .get(BaseUrl + `/character/${data.numbers}`)
-      .then((res) => dispatch(getData(res.data)))
-      .catch((err) => dispatch(setError(err.response.data.error)));
-
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

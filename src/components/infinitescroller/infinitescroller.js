@@ -29,6 +29,7 @@ function InfiniteScroller({ data }) {
       })
     );
     dispatch(setNumbers(arr));
+
     await axios
       .get(BaseUrl + `/character/${arr}`)
       .then((res) => dispatch(getData(res.data)))
