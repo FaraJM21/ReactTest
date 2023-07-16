@@ -67,7 +67,7 @@ function Character() {
           </label>
         </div>
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} id="character-table">
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
