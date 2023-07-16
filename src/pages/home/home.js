@@ -9,20 +9,21 @@ import { BaseUrl } from "../../server/server";
 import "./home.scss";
 function Home() {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.data.data);
+  const data = useSelector((state) => state.data);
 
   useEffect(() => {
     axios
-      .get(BaseUrl + "/character/[1,2,3,4,6,7,8,9]")
+      .get(BaseUrl + `/character/${data.numbers}`)
       .then((res) => dispatch(getData(res.data)))
       .catch((err) => console.log(err));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Container maxWidth="xl">
       <div className="home">
-        {data.length === 0 ? <Spinner /> : <DataList />}
+        {data.data.length === 0 ? <Spinner /> : <DataList />}
       </div>
     </Container>
   );

@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 import { BaseUrl } from "../../server/server";
-import { getData } from "../../redux/dataReducer";
+import { getData, setNumbers } from "../../redux/dataReducer";
 
 import Spinner from "../spinner/spinner";
 function DataList() {
   const data = useSelector((state) => state.data);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [arr, setArr] = useState(
     Array.apply(null, Array(data.data.length)).map((y, i) => {
@@ -22,9 +23,10 @@ function DataList() {
   const fetchMoreData = async () => {
     setArr(
       Array.apply(null, Array(data.data.length + 10)).map((y, i) => {
-        return i;
+        return i + 1;
       })
     );
+    dispatch(setNumbers(arr));
     await axios
       .get(BaseUrl + `/character/${arr}`)
       .then((res) => dispatch(getData(res.data)))
@@ -52,13 +54,29 @@ function DataList() {
                     justifyContent: "center",
                   }}
                 >
-                  <Card hoverable className="card">
+                  {!loading && (
+                    <Card hoverable className="card">
+                      <Skeleton.Image active />
+                      <div className="card-inner">
+                        <Skeleton active />
+                      </div>
+
+                      <div className="episodes">
+                        <Skeleton active />
+                      </div>
+                    </Card>
+                  )}
+                  <Card
+                    hoverable
+                    className="card"
+                    style={{
+                      display: loading ? "flex" : "none",
+                    }}
+                  >
                     <img
-                      // onClick={clicked}
                       src={el.image}
                       alt="404"
-                      style={{ width: "100%" }}
-                      // onLoad={() => setLoading(true)}
+                      onLoad={() => setLoading(true)}
                     />
                     <div className="card-inner">
                       <p>
@@ -71,11 +89,9 @@ function DataList() {
                       <p> Episodes: </p>
                       {el.episode.slice(0, 5).map((el, i) => {
                         return (
-                          //
                           <Link to={`/episode/${el.slice(40, 42)}`} key={i}>
                             {el}
                           </Link>
-                          // <p onClick={() => click(el)}>{el}</p>
                         );
                       })}
                     </div>

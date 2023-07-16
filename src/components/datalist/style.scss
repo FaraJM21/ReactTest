@@ -2,6 +2,9 @@
   width: 100%;
   text-align: center;
 }
+.ant-skeleton.ant-skeleton-element .ant-skeleton-image .ant-skeleton-image-svg {
+  display: none;
+}
 .infinite-scroll-component {
   width: 100%;
   height: auto;
@@ -12,9 +15,13 @@
   display: flex;
   flex-direction: column;
   text-align: start;
-
   img {
     border-radius: 12px;
+  }
+
+  .ant-skeleton.ant-skeleton-active .ant-skeleton-image {
+    width: 254px;
+    height: 254px;
   }
 
   .card-inner {

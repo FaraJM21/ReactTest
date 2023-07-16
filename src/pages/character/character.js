@@ -12,10 +12,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./style.scss";
+import { Skeleton } from "antd";
 
 function Character() {
   let param = useParams();
   const [character, setChacter] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const getCharacter = async () => {
     await axios
@@ -27,30 +29,22 @@ function Character() {
   useEffect(() => {
     getCharacter();
   }, []);
-  console.log(character);
 
   // console.log(character.location.name);
   return (
     <Container maxWidth="lg">
       <div className="wrapper">
         <div className="info">
-          <img src={character.image} alt="404" />
+          {!loading && <Skeleton.Image active />}
+          <img
+            src={character.image}
+            alt="404"
+            style={{
+              display: loading ? "flex" : "none",
+            }}
+            onLoad={() => setLoading(true)}
+          />
         </div>
-        {/* <div className="details">
-          <h3>
-            {" "}
-            Name: <span>{character.name}</span>{" "}
-          </h3>
-          <h3>
-            {" "}
-            Species: <span>{character.species}</span>
-          </h3>
-          <h3>
-            {" "}
-            Location:{" "}
-            <span> </span>
-          </h3>
-        </div> */}
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

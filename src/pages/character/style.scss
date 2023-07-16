@@ -4,7 +4,16 @@
   display: flex;
   gap: 50px;
 
+  .info {
+    width: 50%;
+  }
+
   img {
+    width: 100%;
     border-radius: 12px;
+  }
+  .ant-skeleton.ant-skeleton-active .ant-skeleton-image {
+    width: 367px;
+    height: 367px;
   }
 }
