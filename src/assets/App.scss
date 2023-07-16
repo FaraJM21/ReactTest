@@ -3,11 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-.app,
-#darkTheme,
-body {
-  transition: 0.5s all;
-}
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -34,40 +29,7 @@ body {
   height: 100%;
 }
 
-.ant-spin .ant-spin-dot-item {
+.ant-spin .ant-spin-dot-item-active {
   background-color: #ff161a;
   transform: scale(1.4);
-}
-
-#darkTheme {
-  transition: 0, 5s;
-  background: rgb(18, 18, 18);
-  #body {
-    background-color: rgb(18, 18, 18);
-  }
-  .header {
-    background: rgb(18, 18, 18);
-  }
-
-  h3,
-  h2,
-  h1,
-  p {
-    color: white;
-  }
-
-  .ant-space-item {
-    color: white;
-  }
-
-  .ant-btn-primary:disabled {
-    background: #898989;
-  }
-  .card {
-    background: rgb(46, 46, 46);
-    border: 1px solid black;
-  }
-  .swiper_slide .slide_card {
-    background: rgb(46, 46, 46);
-  }
 }
