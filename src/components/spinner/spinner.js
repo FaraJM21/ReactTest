@@ -13,7 +13,6 @@ const Spinner = () => (
     <Space size="middle">
       <Spin size="large" />
     </Space>
-    />
   </div>
 );
 export default Spinner;
