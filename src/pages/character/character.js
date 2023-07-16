@@ -23,14 +23,13 @@ function Character() {
     await axios
       .get(BaseUrl + `/character/${param.id}`)
       .then((res) => setChacter(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => err);
   };
 
   useEffect(() => {
     getCharacter();
   }, []);
 
-  // console.log(character.location.name);
   return (
     <Container maxWidth="lg">
       <div className="wrapper">
@@ -46,15 +45,41 @@ function Character() {
           />
         </div>
 
+        <div className="about_person">
+          <label>
+            Name: <p>{character.name}</p>
+          </label>
+
+          <label>
+            Species: <p>{character.species}</p>
+          </label>
+
+          <label>
+            Gender: <p>{character.gender}</p>
+          </label>
+
+          <label>
+            Status: <p>{character.status}</p>
+          </label>
+
+          <label>
+            Location: {character.location && character.location.name}
+          </label>
+        </div>
+
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Species</TableCell>
-                <TableCell align="center">Gender</TableCell>
-                <TableCell align="center">Status</TableCell>
-                <TableCell align="center">Location</TableCell>
+                {["Name", "Species", "Gender", "Status", "Location"].map(
+                  (el, i) => {
+                    return (
+                      <TableCell align="center" key={i}>
+                        {el}
+                      </TableCell>
+                    );
+                  }
+                )}
               </TableRow>
             </TableHead>
             <TableBody>

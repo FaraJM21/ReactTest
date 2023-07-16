@@ -11,11 +11,15 @@
   overflow-x: hidden !important;
 }
 .card {
-  width: 350px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   text-align: start;
+  height: 500px;
+  gap: 5px;
+
   img {
+    width: 100%;
     border-radius: 12px;
   }
 
@@ -24,21 +28,26 @@
     height: 254px;
   }
 
-  .card-inner {
+  .card_wrapper {
     width: 100%;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 10px 0;
+    text-transform: capitalize;
+  }
+  .card-inner{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    text-transform: capitalize;
   }
+}
 
-  .episodes {
+@media (max-width: 1116px) {
+  .infinite-row {
     display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-    a {
-      font-size: 13px;
-      line-height: 30px;
-    }
+    justify-content: center;
   }
 }

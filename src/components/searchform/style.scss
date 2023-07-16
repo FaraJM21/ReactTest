@@ -1,23 +1,27 @@
 .search_form {
-  width: 70%;
+  width: 100%;
   display: flex;
   justify-content: center;
-  height: 100px;
   gap: 30px;
   align-items: center;
   position: relative;
-  
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
 }
-.ant-select.ant-select-in-form-item {
+.ant-select.ant-select-in-form-item,
+.ant-input {
   width: 182px;
   position: relative;
+
+  @media (max-width: 550px) {
+    width: 300px;
+  }
 }
 
 .ant-form-item .ant-form-item-explain-error {
   display: none;
-}
-
-.ant-input{
-  position: relative;
-  top: 25%;
 }

@@ -4,20 +4,29 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 120px 0;
 }
 
-.episode_info{
+.episode_info {
   display: flex;
   flex-direction: column;
   gap: 10px;
 
-  h2{
+  h2 {
     font-size: 40px;
     font-weight: 500;
   }
 
-  h3{
+  h3 {
     font-weight: 400;
+  }
 
+  @media (max-width: 455px) {
+    h2 {
+      font-size: 30px;
+    }
+    h3 {
+      font-size: 20px;
+    }
   }
 }

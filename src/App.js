@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./assets/App.scss";
-// import { getData } from "./redux/dataReducer";
-// import { BaseUrl } from "./server/server";
 const Layout = React.lazy(() => import("./pages/layout/layout"));
 const Home = React.lazy(() => import("./pages/home/home"));
 const Episode = React.lazy(() => import("./pages/episode/episode"));

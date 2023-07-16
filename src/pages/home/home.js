@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DataList, Spinner } from "../../components";
-import { getData } from "../../redux/dataReducer";
+import { getData, setError } from "../../redux/dataReducer";
 import { BaseUrl } from "../../server/server";
 import "./home.scss";
 function Home() {
@@ -15,7 +15,7 @@ function Home() {
     axios
       .get(BaseUrl + `/character/${data.numbers}`)
       .then((res) => dispatch(getData(res.data)))
-      .catch((err) => console.log(err));
+      .catch((err) => dispatch(setError(err.response.data.error)));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -23,7 +23,11 @@ function Home() {
   return (
     <Container maxWidth="xl">
       <div className="home">
-        {data.data.length === 0 ? <Spinner /> : <DataList />}
+        {data.data.length === 0 && data.errorMessage === "" ? (
+          <Spinner />
+        ) : (
+          <DataList />
+        )}
       </div>
     </Container>
   );

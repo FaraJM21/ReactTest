@@ -2,7 +2,7 @@ import { Button, Form, Input, Select } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import { getData, hasMore, setError } from "../../redux/dataReducer";
 import { BaseUrl } from "../../server/server";
 import "./style.scss";
@@ -17,7 +17,6 @@ const SearchForm = () => {
   // Watch all values
   const values = Form.useWatch([], form);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     form.validateFields({ validateOnly: true }).then(
@@ -44,7 +43,6 @@ const SearchForm = () => {
       dispatch(setError(err.response.data.error));
     }
     setShowReset(true);
-    location.pathname !== "/" && navigate("/");
   };
 
   const resetAll = async () => {
@@ -59,7 +57,6 @@ const SearchForm = () => {
       dispatch(setError(err.response.data.error));
     }
     form.resetFields();
-    location.pathname !== "/" && navigate("/");
   };
 
   return (
@@ -68,6 +65,7 @@ const SearchForm = () => {
       name="control-hooks"
       onFinish={onFinish}
       className="search_form"
+      style={{ display: location.pathname === "/" ? "flex" : "none" }}
     >
       <Form.Item
         name="name"

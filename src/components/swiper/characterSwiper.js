@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 
 export default function CharacterSwiper({ characters }) {
   const [arr, setArr] = useState([]);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [num, setNum] = useState(4);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   async function fetchCharacters() {
@@ -27,13 +29,24 @@ export default function CharacterSwiper({ characters }) {
 
   useEffect(() => {
     fetchCharacters();
-  }, [characters, fetchCharacters]);
+    const handleResize = () => setWidth(window.innerWidth);
+    if (width < 610) {
+      setNum(3);
+    } else {
+      setNum(4);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [characters, fetchCharacters, width]);
 
   return (
     <div className="swiper_content">
       <h2>Characters</h2>
       <Swiper
-        slidesPerView={4}
+        slidesPerView={num}
         spaceBetween={30}
         freeMode={true}
         pagination={{
