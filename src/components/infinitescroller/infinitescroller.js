@@ -76,7 +76,7 @@ function InfiniteScroller({ data }) {
               }}
             >
               <Fade bottom>
-                <Card hoverable className="card">
+                <Card className="card">
                   {!loading && <Skeleton.Image active />}
                   <img
                     src={el.image}

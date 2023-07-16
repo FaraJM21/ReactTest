@@ -9,6 +9,9 @@ const dataSlice = createSlice({
       ? JSON.parse(localStorage.getItem("numbers"))
       : ["1", "2", "3", "4", "5", "6", "7", "8"],
     hasMore: "true",
+    theme: localStorage.getItem("theme")
+      ? JSON.parse(localStorage.getItem("theme") || "light")
+      : "light",
   },
   reducers: {
     getData: (state, action) => {
@@ -25,7 +28,14 @@ const dataSlice = createSlice({
     setError: (state, action) => {
       state.errorMessage = action.payload;
     },
+    changetheme: (state, action) => {
+      state.theme = action.payload;
+      document.body.style.backgroundColor =
+        state.theme === "dark" ? "rgb(18, 18, 18)" : "white";
+      localStorage.setItem("theme", JSON.stringify(state.theme));
+    },
   },
 });
-export const { getData, setNumbers, hasMore, setError } = dataSlice.actions;
+export const { getData, setNumbers, hasMore, setError, changetheme } =
+  dataSlice.actions;
 export default dataSlice.reducer;

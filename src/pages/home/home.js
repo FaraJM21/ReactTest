@@ -12,6 +12,7 @@ function Home() {
   const data = useSelector((state) => state.data);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(BaseUrl + `/character/${data.numbers}`)
       .then((res) => dispatch(getData(res.data)))
