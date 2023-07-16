@@ -39,7 +39,7 @@ function DataList() {
         <InfiniteScroll
           dataLength={data.data.length}
           next={fetchMoreData}
-          hasMore={true}
+          hasMore={data.hasMore === "true" ? true : false}
           loader={<Spinner />}
         >
           <Row gutter={[50, 34]}>
@@ -66,34 +66,44 @@ function DataList() {
                       </div>
                     </Card>
                   )}
-                  <Card
-                    hoverable
-                    className="card"
-                    style={{
-                      display: loading ? "flex" : "none",
-                    }}
-                  >
+                  <Card hoverable className="card">
                     <img
                       src={el.image}
                       alt="404"
+                      style={{
+                        display: loading ? "flex" : "none",
+                      }}
                       onLoad={() => setLoading(true)}
                     />
                     <div className="card-inner">
-                      <p>
-                        Name: <Link to={`/character/${el.id}`}> {el.name}</Link>{" "}
-                      </p>
-                      <p>Species: {el.species}</p>
-                      <p>Status: {el.status}</p>
+                      {!loading ? (
+                        <Skeleton active />
+                      ) : (
+                        <>
+                          <p>
+                            Name:{" "}
+                            <Link to={`/character/${el.id}`}> {el.name}</Link>{" "}
+                          </p>
+                          <p>Species: {el.species}</p>
+                          <p>Status: {el.status}</p>
+                        </>
+                      )}
                     </div>
                     <div className="episodes">
-                      <p> Episodes: </p>
-                      {el.episode.slice(0, 5).map((el, i) => {
-                        return (
-                          <Link to={`/episode/${el.slice(40, 42)}`} key={i}>
-                            {el}
-                          </Link>
-                        );
-                      })}
+                      {!loading ? (
+                        <Skeleton active />
+                      ) : (
+                        <>
+                          <p> Episodes: </p>
+                          {el.episode.slice(0, 5).map((el, i) => {
+                            return (
+                              <Link to={`/episode/${el.slice(40, 42)}`} key={i}>
+                                {el}
+                              </Link>
+                            );
+                          })}
+                        </>
+                      )}
                     </div>
                   </Card>
                 </Col>

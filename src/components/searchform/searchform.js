@@ -1,14 +1,15 @@
 import { Button, Form, Input, Select } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { getData, setError } from "../../redux/dataReducer";
+import { getData, hasMore, setError } from "../../redux/dataReducer";
 import { BaseUrl } from "../../server/server";
 import "./style.scss";
 const { Option } = Select;
 
 const SearchForm = () => {
+  const data = useSelector((state) => state.data);
   const [form] = Form.useForm();
   const [submittable, setSubmittable] = useState(false);
   const [showReset, setShowReset] = useState(false);
@@ -38,6 +39,7 @@ const SearchForm = () => {
         .get(BaseUrl + `/character/?name=${name}&status=${status}`)
         .then((res) => dispatch(getData(res.data.results)));
       dispatch(setError(""));
+      dispatch(hasMore("false"));
     } catch (err) {
       dispatch(setError(err.response.data.error));
     }
@@ -49,9 +51,10 @@ const SearchForm = () => {
     setShowReset(false);
     try {
       await axios
-        .get(BaseUrl + "/character")
-        .then((res) => dispatch(getData(res.data.results)));
+        .get(BaseUrl + `/character/${data.numbers}`)
+        .then((res) => dispatch(getData(res.data)));
       dispatch(setError(""));
+      dispatch(hasMore("true"));
     } catch (err) {
       dispatch(setError(err.response.data.error));
     }
