@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -29,7 +30,8 @@ body {
   height: 100%;
 }
 
-.ant-spin .ant-spin-dot-item-active {
+.ant-spin .ant-spin-dot-item {
   background-color: #ff161a;
   transform: scale(1.4);
 }
+
