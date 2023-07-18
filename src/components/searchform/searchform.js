@@ -48,20 +48,17 @@ const SearchForm = () => {
   };
 
   const resetAll = async () => {
-    setShowReset(false);
-    if (data.errorMessage !== "") {
-      try {
-        await axios
-          .get(BaseUrl + `/character/${data.numbers}`)
-          .then((res) => dispatch(getData(res.data)))
-          .then((err) => console.log(err));
-        dispatch(setError(""));
-        dispatch(hasMore("true"));
-      } catch (err) {
-        dispatch(setError(err.message));
-      }
-    }
     form.resetFields();
+    setShowReset(false)
+    try {
+      await axios
+        .get(BaseUrl + `/character/${data.numbers}`)
+        .then((res) => dispatch(getData(res.data)));
+      dispatch(setError(""));
+      dispatch(hasMore("true"));
+    } catch (err) {
+      dispatch(setError(err.message));
+    }
   };
 
   return (
